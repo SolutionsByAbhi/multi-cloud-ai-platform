@@ -1,0 +1,36 @@
+name:  Infra  Terraform
+
+on:
+    workflow_dispatch:
+    push:
+        paths:
+            -  "infra/**"
+
+jobs:
+    terraform-aws:
+        runs-on:  ubuntu-latest
+        defaults:
+            run:
+               working-directory:  infra/aws
+        steps:
+            -  uses:  actions/checkout@v4
+            -  uses:  hashicorp/setup-terraform@v3
+                with:
+                    terraform_version:  1.6.0
+            -  run:  terraform  fmt  -check
+            -  run:  terraform  init
+            -  run:  terraform  validate
+
+    terraform-azure:
+       runs-on:  ubuntu-latest
+        defaults:
+            run:
+                working-directory:  infra/azure
+        steps:
+            -  uses:  actions/checkout@v4
+            -  uses:  hashicorp/setup-terraform@v3
+                with:
+                    terraform_version:  1.6.0
+            -  run:  terraform  fmt  -check
+            - run:  terraform  init
+            -  run:  terraform  validate
