@@ -1,0 +1,26 @@
+apiVersion:  apps/v1
+kind:  Deployment
+metadata:
+    name:  inference-service
+   namespace:  ai-platform
+spec:
+    replicas:  1
+    selector:
+        matchLabels:
+            app:  inference-service
+    template:
+        metadata:
+            labels:
+                app:  inference-service
+        spec:
+            containers:
+                -  name:  inference-service
+                    image:  ghcr.io/your-org/inference-service:latest
+                   ports:
+                        -  containerPort:  8080
+                    resources:
+                        limits:
+                            nvidia.com/gpu:  1
+                        requests:
+                           cpu:  "500m"
+                            memory:  "1Gi"
