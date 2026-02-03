@@ -1,0 +1,19 @@
+apiVersion:  networking.istio.io/v1beta1
+kind:  VirtualService
+metadata:
+    name:  api-gateway-vs
+    namespace:  ai-platform
+spec:
+   hosts:
+        -  "*"
+    gateways:
+        -  istio-system/ai-platform-gateway
+    http:
+        -  match:
+                -  uri:
+                        prefix:  /infer
+            route:
+                -  destination:
+                        host:  api-gateway
+                       port:
+                            number:  80
