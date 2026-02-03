@@ -1,0 +1,27 @@
+name:  Deploy  to  Kubernetes
+
+on:
+    workflow_dispatch:
+
+jobs:
+    deploy-aws:
+        runs-on:  ubuntu-latest
+        steps:
+            -  uses:  actions/checkout@v4
+            -  name:  Configure  kubeconfig  (AWS)
+                run:  echo  "$KUBECONFIG_AWS"  >  kubeconfig  &&  export  KUBECONFIG=$PWD/kubeconfig
+                env:
+                   KUBECONFIG_AWS:  ${{  secrets.KUBECONFIG_AWS  }}
+            -  name:  Apply  manifests
+                run:  kubectl  apply  -k  ci-cd/kustomize-overlays/aws
+
+    deploy-azure:
+        runs-on:  ubuntu-latest
+        steps:
+            -  uses:  actions/checkout@v4
+            -  name:  Configure  kubeconfig  (Azure)
+                run:  echo  "$KUBECONFIG_AZURE"  >  kubeconfig  &&  export  KUBECONFIG=$PWD/kubeconfig
+               env:
+                    KUBECONFIG_AZURE:  ${{  secrets.KUBECONFIG_AZURE  }}
+            -  name:  Apply  manifests
+                run:  kubectl  apply  -k  ci-cd/kustomize-overlays/azure
