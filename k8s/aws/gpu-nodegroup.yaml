@@ -1,0 +1,7 @@
+apiVersion:  v1
+kind:  ConfigMap
+metadata:
+    name:  aws-gpu-config
+    namespace:  ai-platform
+data:
+    note:  "Placeholder  for  AWS-specific  GPU  configs  (e.g.,  device  plugin  DaemonSet)."
