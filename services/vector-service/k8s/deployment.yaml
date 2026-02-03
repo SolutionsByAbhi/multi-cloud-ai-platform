@@ -1,0 +1,24 @@
+apiVersion:  apps/v1
+kind:  Deployment
+metadata:
+    name:  vector-service
+    namespace:  ai-platform
+spec:
+    replicas:  1
+   selector:
+        matchLabels:
+            app:  vector-service
+    template:
+        metadata:
+            labels:
+                app:  vector-service
+        spec:
+            containers:
+                -  name:  vector-service
+                    image:  ghcr.io/your-org/vector-service:latest
+                    ports:
+                       -  containerPort:  8080
+                    resources:
+                        requests:
+                            cpu:  "200m"
+                            memory:  "256Mi"
